@@ -76,8 +76,6 @@ span.quantity {
   padding-bottom: 15px;
   border-radius: 8px;
 }
-.product-img {
-}
 .product-img img {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -116,8 +114,6 @@ a.modal-btn.view-more-btn:hover {
   margin-bottom: 20px;
   box-shadow: inset 0px 0px 5px 0px #cdcdcd;
 }
-.description {
-}
 button {
   background-image: linear-gradient(
     to right,
@@ -142,10 +138,6 @@ button {
   background-position: right center;
   color: #fff;
   text-decoration: none;
-}
-button.modal-btn {
-}
-button.cart-btn {
 }
 
 .modal-short-description ul {
