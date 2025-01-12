@@ -1,0 +1,156 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ul {
+  padding-left: 1.5rem;
+}
+li {
+  color: gray;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #2b2b2b;
+}
+/* styles.css */
+.top-bg {
+  background-image: linear-gradient(
+    to right,
+    #5c258d 0%,
+    #4389a2 51%,
+    #5c258d 100%
+  );
+  padding: 25px;
+  color: white;
+  font-size: 2rem;
+}
+.logo {
+  padding-left: 60px;
+}
+
+.checkout {
+  padding-right: 60px;
+}
+.container-wraper {
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: -3px -3px 10px 0px #e9d1ff, 3px 3px 10px 0px #7dc3e1;
+}
+.row {
+  gap: 25px 0;
+}
+.single-product {
+  box-shadow: -3px -3px 10px 0px #d1d1d1, 3px 3px 10px 0px #d1d1d1;
+  padding-bottom: 15px;
+  border-radius: 8px;
+}
+.product-img {
+}
+.product-img img {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  transition: ease 0.25s;
+}
+.single-product:hover .product-img > img {
+  transform: scale(0.9);
+}
+.product-details {
+  padding: 10px;
+  min-height: 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.product-details h2 {
+  font-size: 1.3rem;
+  color: #656565;
+  padding-bottom: 15px;
+}
+.product-details a {
+  color: #64b1d3;
+  padding-left: 0.4rem;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+.price {
+  min-width: 100%;
+  font-size: 1.3rem;
+  padding: 5px;
+  margin-bottom: 20px;
+  box-shadow: inset 0px 0px 5px 0px #cdcdcd;
+}
+.description {
+}
+button {
+  background-image: linear-gradient(
+    to right,
+    #5c258d 0%,
+    #4389a2 51%,
+    #5c258d 100%
+  );
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 5px;
+  display: block;
+  box-shadow: 5px 5px 10px 1px rgb(207 207 207);
+}
+button:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+button.modal-btn {
+}
+button.cart-btn {
+}
+
+.modal-short-description ul {
+  list-style: none;
+  padding-left: 0;
+}
+.modal-description {
+  margin-top: 60px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+.modal-description p {
+  text-align: justify;
+}
+.btn-grad {
+  background-image: linear-gradient(
+    to right,
+    #5c258d 0%,
+    #4389a2 51%,
+    #5c258d 100%
+  );
+}
+.btn-grad {
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+}
+
+.btn-grad:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
