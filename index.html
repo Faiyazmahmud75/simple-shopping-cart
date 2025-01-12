@@ -111,6 +111,25 @@
         </div>
         <div class="offcanvas-body">
           <ul id="cart-items-list"></ul>
+
+          <div class="form-group promo-area">
+            <label for="promo-code">Promo Code:</label>
+            <input
+              type="text"
+              id="promo-code-input"
+              class="form-control"
+              placeholder="Enter Promo Code"
+            />
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="apply-promo-button"
+            >
+              Apply Promo
+            </button>
+            <p id="applied-promo"></p>
+          </div>
+
           <div class="checkout-bottom">
             <button type="button" class="btn btn-danger" id="clear-cart-button">
               <i class="fa-solid fa-trash-can"></i>
@@ -118,7 +137,7 @@
             <button type="submit" class="btn btn-primary" id="checkout-button">
               Checkout
             </button>
-            <h4 class="text-end">Total: $<span id="cart-total">0.00</span></h4>
+            <h4 class="text-end">Total: <span id="cart-total">0.00</span></h4>
           </div>
         </div>
       </div>

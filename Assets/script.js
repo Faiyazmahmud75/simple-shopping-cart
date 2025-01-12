@@ -19,6 +19,7 @@ async function getProducts() {
 class Cart {
   constructor() {
     this.items = {};
+    this.appliedPromo = null;
   }
   // add to cart
   addToCart(productId, products) { 
@@ -46,22 +47,36 @@ class Cart {
     
   }
   // total price count
-  getTotal() {
+  getTotal(promoCode = null) {
     let total = 0;
     for (const productId in this.items) {
       total += this.items[productId].product.price * this.items[productId].quantity;
     }
+
+    if (this.appliedPromo && promoCodes[this.appliedPromo]) {
+      const discount = promoCodes[this.appliedPromo];
+      total -= total * discount;
+    }
+
     return total;
   }
-  // clear cart
+
   clearCart() {
     this.items = {};
+    this.appliedPromo = null;
     updateCartUI();
+    const promoCodeInput = document.getElementById('promo-code-input');
+  promoCodeInput.value = '';
   }
 }
 
 const cart = new Cart();
 let productsData;
+
+const promoCodes = {
+  ostad10: 0.1,
+  ostad5: 0.05,
+};
 
 // =============displaying products dynamically=============
 
@@ -102,7 +117,7 @@ async function displayProducts() {
 
     const addToCartButton = productCard.querySelector('.cart-btn');
     addToCartButton.addEventListener('click', () => {
-      cart.addToCart(product.id, products); // Pass products array to addToCart
+      cart.addToCart(product.id, products); 
     });
   });
 }
@@ -132,7 +147,7 @@ function setupDetailsModal(product, productCard) {
     modalDescription.textContent = product.description;
   });
 }
-// showing some extra data in a moodal (another button)
+// same task as above but different button
 function setupViewMoreModal(product, productCard) {
   const viewMoreButton = productCard.querySelector('.view-more-btn');
 
@@ -194,7 +209,9 @@ plusBtn.addEventListener('click', () => {
   }
 
   const cartTotal = document.getElementById('cart-total');
-  cartTotal.textContent = cart.getTotal().toFixed(2);
+  cartTotal.textContent = `$${cart.getTotal(cart.appliedPromo).toFixed(2)}`;
+  const appliedPromo = document.getElementById('applied-promo');
+  appliedPromo.textContent = cart.appliedPromo ? `Promo '${cart.appliedPromo}' Applied Successfuly!` : '';
 }
 // Checkout interface functionalities
 const cartIcon = document.getElementById('cart-icon');
@@ -226,8 +243,30 @@ checkoutButton.addEventListener('click', () => {
     itemSummary.textContent = `${product.title} x ${quantity} = $${(product.price * quantity).toFixed(2)}`;
     modalBody.appendChild(itemSummary);
   }
+  const promomsge = document.getElementById('applied-promo');
+  promomsge.textContent = '';
+  const promoCodeInput = document.getElementById('promo-code-input');
+  promoCodeInput.value = '';
 
   const modalTotal = document.getElementById('cart-summary-total');
   modalTotal.textContent = `Total: $${cart.getTotal().toFixed(2)}`;
 });
+
+// ++===+++===++ Promo Code functionality ++===+++===++
+
+const promoCodeInput = document.getElementById('promo-code-input');
+const applyPromoButton = document.getElementById('apply-promo-button');
+
+applyPromoButton.addEventListener('click', () => {
+  const enteredCode = promoCodeInput.value.toLowerCase(); 
+  if (promoCodes[enteredCode]) {
+    cart.appliedPromo = enteredCode; 
+    updateCartUI(); 
+  } else {
+    alert('Invalid promo code.');
+  }
+});
+
+
 displayProducts();
+
