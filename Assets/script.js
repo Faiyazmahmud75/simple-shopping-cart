@@ -218,7 +218,7 @@ function updateCartUI() {
   cartTotal.textContent = `$${cart.getTotal(cart.appliedPromo).toFixed(2)}`;
   const appliedPromo = document.getElementById('applied-promo');
   if (cart.appliedPromo) {
-    appliedPromo.innerHTML = `Promo <span">${cart.appliedPromo} </span> Applied Successfully!`; 
+    appliedPromo.innerHTML = `Promo <span>${cart.appliedPromo} </span> Applied Successfully!`; 
   } else {
     appliedPromo.innerHTML = '';
   }
@@ -237,30 +237,81 @@ clearCartButton.addEventListener('click', () => {
 
 
 const checkoutButton = document.getElementById('checkout-button'); 
-checkoutButton.addEventListener('click', () => {
-
-  const cartSummaryModal = new bootstrap.Modal(document.getElementById('cart-summary-modal'));
+checkoutButton.addEventListener("click", () => {
+  const cartSummaryModal = new bootstrap.Modal(document.getElementById("cart-summary-modal"));
   cartSummaryModal.show();
 
-  const modalBody = document.getElementById('cart-summary-modal-body');
-  modalBody.innerHTML = ''; 
+  const modalBody = document.getElementById("cart-summary-modal-body");
+  modalBody.innerHTML = `
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody id="cart-summary-table-body"></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3"><strong>Delivery Charge</strong></td>
+          <td>$5.00</td>
+        </tr>
+        <tr>
+          <td colspan="3"><strong>Tax (8%)</strong></td>
+          <td id="tax-amount">$0.00</td>
+        </tr>
+        <tr>
+          <td colspan="3"><strong>VAT (15%)</strong></td>
+          <td id="vat-amount">$0.00</td>
+        </tr>
+        <tr>
+          <td colspan="3"><strong>Discounted Price</strong></td>
+          <td id="discounted-price">$0.00</td>
+        </tr>
+      </tfoot>
+    </table>
+  `;
+
+  const cartTableBody = document.getElementById("cart-summary-table-body");
+  let subtotal = 0;
 
   for (const productId in cart.items) {
     const product = cart.items[productId].product;
     const quantity = cart.items[productId].quantity;
+    const totalPrice = product.price * quantity;
+    subtotal += totalPrice;
 
-    const itemSummary = document.createElement('p');
-    itemSummary.textContent = `${product.title} x ${quantity} = $${(product.price * quantity).toFixed(2)}`;
-    modalBody.appendChild(itemSummary);
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${product.title}</td>
+      <td>${quantity}</td>
+      <td>$${product.price.toFixed(2)}</td>
+      <td>$${totalPrice.toFixed(2)}</td>
+    `;
+    cartTableBody.appendChild(row);
   }
-  const promomsge = document.getElementById('applied-promo');
-  promomsge.textContent = '';
-  const promoCodeInput = document.getElementById('promo-code-input');
-  promoCodeInput.value = '';
 
-  const modalTotal = document.getElementById('cart-summary-total');
-  modalTotal.textContent = `Total: $${cart.getTotal().toFixed(2)}`;
+  const deliveryCharge = 5.0;
+  const tax = subtotal * 0.08;
+  const vat = subtotal * 0.15;
+  let totalWithExtras = subtotal + deliveryCharge + tax + vat;
+
+  let discount = 0;
+  if (cart.appliedPromo && promoCodes[cart.appliedPromo]) {
+    discount = totalWithExtras * promoCodes[cart.appliedPromo];
+    totalWithExtras -= discount;
+  }
+
+  document.getElementById("tax-amount").textContent = `$${tax.toFixed(2)}`;
+  document.getElementById("vat-amount").textContent = `$${vat.toFixed(2)}`;
+  document.getElementById("discounted-price").textContent = `-$${discount.toFixed(2)}`;
+
+  // Set final total in modal footer
+  document.getElementById("cart-summary-total").textContent = `Final Total: $${totalWithExtras.toFixed(2)}`;
 });
+
 
 // ++===+++===++ Promo Code functionality ++===+++===++
 

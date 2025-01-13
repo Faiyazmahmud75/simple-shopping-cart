@@ -1,4 +1,0 @@
-========= To-do =======
-1. Input validation (Should not select more items than stock amount) ✅
-2. Final checkout modal interface UI upgrade with table
-3. Improve CSS styles using external fonts & minor layout fixing and finishing touch.

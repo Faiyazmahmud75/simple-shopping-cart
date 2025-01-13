@@ -39,6 +39,9 @@ h6 {
 .checkout {
   padding-right: 60px;
 }
+button#cart-icon i {
+  color: #86b7fe;
+}
 .btn-minus {
   color: #5c258d;
 }
@@ -57,6 +60,7 @@ h6 {
 button#cart-icon {
   background: transparent;
   box-shadow: 5px 5px 10px 1px #3e076f;
+  font-size: 1.5rem;
 }
 
 span.quantity {
@@ -128,8 +132,8 @@ button {
   transition: 0.5s;
   background-size: 200% auto;
   color: white;
-  box-shadow: 0 0 20px #eee;
   border-radius: 5px;
+  font-weight: 500;
   display: block;
   box-shadow: 5px 5px 10px 1px rgb(207 207 207);
 }
@@ -194,6 +198,13 @@ ul#cart-items-list li p {
   font-weight: bold;
   box-shadow: inset 2px 2px 10px 2px #d3d3d3;
 }
+
+p#applied-promo {
+  font-size: large;
+  margin-top: 25px;
+  font-weight: 500;
+}
+
 .checkout-bottom {
   display: flex;
   justify-content: space-around;
@@ -206,8 +217,15 @@ ul#cart-items-list li p {
   font-size: large;
   background: #4488a2;
   transition: ease 0.4s;
+  font-weight: 500;
+}
+button#clear-cart-button {
+  background: #5c258d;
 }
 
+button#clear-cart-button:hover {
+  background: #8843c9;
+}
 .checkout-bottom button:hover {
   color: white;
   background: #19617b;
@@ -218,4 +236,38 @@ ul#cart-items-list li p {
 p#cart-summary-total {
   font-size: 1.5rem;
   font-weight: bold;
+}
+button#apply-promo-button {
+  font-weight: 500;
+  background: #4488a2;
+  border: none;
+  outline: none;
+}
+p#applied-promo span {
+  text-transform: capitalize;
+  font-weight: 700;
+  color: #f9bb00;
+  padding: 0px 5px;
+}
+
+input#promo-code-input {
+  margin: 8px 0px 15px 0;
+}
+
+.promo-area {
+  margin-top: 50px;
+}
+.modal-header {
+  background: #5c258d;
+  color: white;
+}
+
+h5#cartSummaryModalLabel {
+  color: white;
+}
+.cart-close button {
+  box-shadow: 5px 5px 10px 1px #3c155f;
+}
+button#apply-promo-button:hover {
+  box-shadow: 1px 2px 2px 0px grey;
 }
