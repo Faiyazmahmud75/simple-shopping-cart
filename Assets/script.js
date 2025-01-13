@@ -22,15 +22,21 @@ class Cart {
     this.appliedPromo = null;
   }
   // add to cart
-  addToCart(productId, products) { 
-    if (productId in this.items) {
-      this.items[productId].quantity++;
-    } else {
-      const product = products.find(p => p.id === parseInt(productId)); 
-      this.items[productId] = {
-        product: product, 
-        quantity: 1
-      };
+  addToCart(productId, productsData) { 
+    const product = productsData.find(p => p.id === parseInt(productId)); 
+    if (product) {
+      if (productId in this.items) {
+        if (this.items[productId].quantity < product.stock) { 
+          this.items[productId].quantity++; 
+        } else {
+          alert(`Only ${product.stock} items of ${product.title} are available in stock.`);
+        }
+      } else {
+        this.items[productId] = {
+          product: product, 
+          quantity: 1
+        };
+      }
     }
     updateCartUI();
   }
@@ -81,10 +87,10 @@ const promoCodes = {
 // =============displaying products dynamically=============
 
 async function displayProducts() {
-  const products = await getProducts(); 
+  productsData = await getProducts(); 
   const productContainer = document.getElementById('product-card');
 
-  products.forEach(product => {
+  productsData.forEach(product => {
     const productCard = document.createElement('div');
     productCard.classList.add('col-md-6', 'col-lg-4', 'col-xl-3');
     productCard.innerHTML = `
@@ -117,7 +123,7 @@ async function displayProducts() {
 
     const addToCartButton = productCard.querySelector('.cart-btn');
     addToCartButton.addEventListener('click', () => {
-      cart.addToCart(product.id, products); 
+      cart.addToCart(product.id, productsData); 
     });
   });
 }
@@ -201,9 +207,9 @@ function updateCartUI() {
     });
 
     const plusBtn = listItem.querySelector('.btn-plus');
-plusBtn.addEventListener('click', () => {
-  cart.addToCart(productId, productsData);
-});
+    plusBtn.addEventListener('click', () => {
+      cart.addToCart(productId, productsData);
+    });
 
     cartItemsList.appendChild(listItem);
   }
@@ -211,7 +217,11 @@ plusBtn.addEventListener('click', () => {
   const cartTotal = document.getElementById('cart-total');
   cartTotal.textContent = `$${cart.getTotal(cart.appliedPromo).toFixed(2)}`;
   const appliedPromo = document.getElementById('applied-promo');
-  appliedPromo.textContent = cart.appliedPromo ? `Promo '${cart.appliedPromo}' Applied Successfuly!` : '';
+  if (cart.appliedPromo) {
+    appliedPromo.innerHTML = `Promo <span">${cart.appliedPromo} </span> Applied Successfully!`; 
+  } else {
+    appliedPromo.innerHTML = '';
+  }
 }
 // Checkout interface functionalities
 const cartIcon = document.getElementById('cart-icon');
@@ -261,7 +271,7 @@ applyPromoButton.addEventListener('click', () => {
   const enteredCode = promoCodeInput.value.toLowerCase(); 
   if (promoCodes[enteredCode]) {
     cart.appliedPromo = enteredCode; 
-    updateCartUI(); 
+    updateCartUI(productsData); 
   } else {
     alert('Invalid promo code.');
   }
