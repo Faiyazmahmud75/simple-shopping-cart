@@ -18,4 +18,5 @@ This is a simple shopping cart application implemented in JavasSript. It allows 
   - CSS
   - Bootstrap
   - Ajax
+  - [Dummy Json API](https://dummyjson.com/docs/products)
 
